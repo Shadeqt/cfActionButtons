@@ -8,15 +8,14 @@ local buttonStates = {}
 -- Shared Functions
 -- Retrieves or creates a state object for tracking button status
 function addon.getOrCreateState(button)
-	local buttonName = button:GetName()
-	if not buttonStates[buttonName] then
-		buttonStates[buttonName] = {
+	if not buttonStates[button] then
+		buttonStates[button] = {
 			isOutOfMana = false,
 			isOutOfRange = false,
 			isUnusable = false
 		}
 	end
-	return buttonStates[buttonName]
+	return buttonStates[button]
 end
 
 -- Applies color to button icon based on state priority (mana > range > unusable)
