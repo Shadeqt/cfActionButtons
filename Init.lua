@@ -18,9 +18,9 @@ addon.MODULES = {
 }
 
 addon.DEFAULT_COLORS = {
-	manaColor = {r = 0.1, g = 0.3, b = 1.0},
-	rangeColor = {r = 1.0, g = 0.3, b = 0.1},
-	unusableColor = {r = 0.4, g = 0.4, b = 0.4},
+	manaColor = {r = 0.55, g = 0.65, b = 1.0},
+	rangeColor = {r = 1.0, g = 0.65, b = 0.55},
+	unusableColor = {r = 0.7, g = 0.7, b = 0.7},
 }
 
 local dbDefaults = {
