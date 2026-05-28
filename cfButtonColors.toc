@@ -1,19 +1,14 @@
 ## Interface: 11508
 ## Title:     cfButtonColors
-## Notes:     Colors player and pet action bar buttons when out of range or insufficient mana
+## Notes:     Colors player and pet action buttons when out of range, mana, or unusable
 ## Author:    Cowfoot
 ## Version:   1.0
 ## SavedVariables: cfButtonColorsDB
 
-# Infrastructure
 Init.lua
-
-# Core
-cfButtonColors.lua
-
-# UI
-Interface.lua
-
-# Modules
-Player.lua
-Pet.lua
+Core.lua
+GUI\_Factory.lua
+GUI\Settings.lua
+Features\PlayerMana.lua
+Features\PlayerRange.lua
+Features\Pet.lua

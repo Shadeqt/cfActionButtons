@@ -1,58 +1,51 @@
--- Create addon namespace
-cfButtonColors = {}
-
--- Localize for performance and consistency
-local db = cfButtonColorsDB
+cfButtonColors = cfButtonColors or {}
 local addon = cfButtonColors
 
--- Module-level state
 local _, playerClass = UnitClass("player")
-
--- Initialization code
 addon.isPetClass = (playerClass == "HUNTER" or playerClass == "WARLOCK")
 
-addon.MODULES = {
-	PLAYER_MANA = "PlayerMana",
+addon.KEYS = {
+	PLAYER_MANA  = "PlayerMana",
 	PLAYER_RANGE = "PlayerRange",
-	PET = "Pet",
+	PET          = "Pet",
 }
 
 addon.DEFAULT_COLORS = {
-	manaColor = {r = 0.55, g = 0.65, b = 1.0},
-	rangeColor = {r = 1.0, g = 0.65, b = 0.55},
-	unusableColor = {r = 0.7, g = 0.7, b = 0.7},
+	manaColor     = {r = 0.55, g = 0.65, b = 1.0},
+	rangeColor    = {r = 1.0,  g = 0.65, b = 0.55},
+	unusableColor = {r = 0.7,  g = 0.7,  b = 0.7},
 }
 
-local dbDefaults = {
-	[addon.MODULES.PLAYER_MANA] = true,
-	[addon.MODULES.PLAYER_RANGE] = true,
-	[addon.MODULES.PET] = addon.isPetClass,
-	manaColor = addon.DEFAULT_COLORS.manaColor,
-	rangeColor = addon.DEFAULT_COLORS.rangeColor,
+local defaults = {
+	[addon.KEYS.PLAYER_MANA]  = true,
+	[addon.KEYS.PLAYER_RANGE] = true,
+	[addon.KEYS.PET]          = addon.isPetClass,
+	manaColor     = addon.DEFAULT_COLORS.manaColor,
+	rangeColor    = addon.DEFAULT_COLORS.rangeColor,
 	unusableColor = addon.DEFAULT_COLORS.unusableColor,
 }
 
--- Database initialization
-if not db then
-	db = {}
-	cfButtonColorsDB = db
-end
-
--- Apply defaults for any missing keys (adds new settings in updates)
-for key, value in pairs(dbDefaults) do
-	if db[key] == nil then
-		-- Deep copy for color tables
+cfButtonColorsDB = cfButtonColorsDB or {}
+for key, value in pairs(defaults) do
+	if cfButtonColorsDB[key] == nil then
 		if type(value) == "table" then
-			db[key] = {r = value.r, g = value.g, b = value.b}
+			cfButtonColorsDB[key] = {r = value.r, g = value.g, b = value.b}
 		else
-			db[key] = value
+			cfButtonColorsDB[key] = value
 		end
 	end
 end
-
--- Remove keys from DB that aren't in defaults (cleanup deprecated settings)
-for key in pairs(db) do
-	if dbDefaults[key] == nil then
-		db[key] = nil
+for key in pairs(cfButtonColorsDB) do
+	if defaults[key] == nil then
+		cfButtonColorsDB[key] = nil
 	end
 end
+
+addon.db = cfButtonColorsDB
+
+EventUtil.ContinueOnAddOnLoaded("cfButtonColors", function()
+	addon.InitSettings()
+	if addon.db[addon.KEYS.PLAYER_MANA]  then addon.EnablePlayerMana()  end
+	if addon.db[addon.KEYS.PLAYER_RANGE] then addon.EnablePlayerRange() end
+	if addon.db[addon.KEYS.PET] and addon.isPetClass then addon.EnablePet() end
+end)
