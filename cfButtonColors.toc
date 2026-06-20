@@ -1,8 +1,0 @@
-## Interface: 11508
-## Title:     cfButtonColors
-## Notes:     Tints action buttons red when out of range (player), red/blue when out of range/mana (pet)
-## Author:    Cowfoot
-## Version:   2.0
-
-PlayerRange.lua
-Pet.lua

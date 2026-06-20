@@ -1,0 +1,9 @@
+## Interface: 11508
+## Title:     cfActionButtons
+## Notes:     Action-button cues: OOR/OOM tints (player+pet) and an outdated spell-rank marker
+## Author:    Cowfoot
+## Version:   2.1
+
+PlayerRange.lua
+Pet.lua
+OutdatedRank.lua
